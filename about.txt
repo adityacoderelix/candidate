@@ -1,0 +1,78 @@
+PROJECT REPORT
+Candidate Management System
+
+Project Title: Candidate Management System
+Start Date: 11th May 2026
+Developed By: Sairah Vanya DMello
+Role: Web Developer Intern
+Organization: CodeRelix
+
+Introduction
+This project, titled Candidate Management System, is a web-based application developed to streamline and manage the 
+recruitment process efficiently. It enables the Organization to store, track, and manage candidate information 4
+throughout different stages of hiring.
+The system is designed with a user-friendly interface and provides functionalities for managing candidate data, job 
+postings, interview processes, and feedback.
+
+Objectives
+* To digitize and simplify the recruitment workflow
+* To maintain a centralized database of candidates
+* To track candidate progress across different hiring stages
+* To reduce manual errors and improve efficiency
+* To provide quick access to candidate details and documents
+
+Features
+* User Authentication: Secure login system with role-based access
+* Candidate Management: Add, edit, delete, and view candidate details
+* Resume Upload: Upload and view candidate resumes
+* Status Tracking: Track candidate stages such as Applied, Interview, Shortlisted, etc.
+* Interview Scheduling: Store interview date, time, and interviewer details
+* Feedback System: Add and view feedback for candidates
+* Search & Filter: Easily find candidates based on criteria
+* Responsive UI: Clean and intuitive interface using modern UI components
+
+Technologies Used
+* Frontend: React.js, Bootstrap
+* Backend: Node.js, Express.js
+* Database: MongoDB
+* API Handling: Axios
+* Version Control: Git
+
+System Workflow
+1. User logs into the system
+2. Admin/HR can add new candidates
+3. Candidate details are stored in the database
+4. Users can update candidate status and schedule interviews
+5. Feedback is added after each interview stage
+6. Documents like resumes can be uploaded and accessed
+7. Data can be searched, filtered, and managed easily
+
+Candidate Life Cycle (as demonstrated in the project)
+1. New application
+2. Either the candidate is directly shortlisted or rejected or given a screening call
+3. An interview is then scheduled for the candidate
+4. The In-Person Interview is completed for the candidate
+5. The candidate is then shortlisted or offered or rejected
+6. The candidate can either accept the offer, reject the offer or negotiate it
+6. The candidate can also be blacklisted or a cooling period is imposed on the said candidate
+
+Challenges Faced
+* Handling form validation effectively
+* Managing state across multiple components in React
+* Debugging API errors such as 500 and 401 responses
+* Ensuring proper data flow between frontend and backend
+* Styling and UI consistency
+* Implementing mailtrap effectively
+
+Learning Outcomes
+* Gained hands-on experience with the MERN stack
+* Improved debugging and problem-solving skills
+* Learned how to structure a full-stack application
+* Understood REST API integration
+* Enhanced UI/UX design skills
+
+Future Enhancements
+* Implement role-based dashboards
+* Add analytics and reporting features
+* Improve UI with advanced design components
+* Enable file preview for multiple document types

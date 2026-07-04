@@ -1,0 +1,107 @@
+html, body, #root {
+  height: 100%;
+  margin: 0;
+  overflow: hidden;
+}
+
+.public-apply-page {
+  height: 100vh;
+  display: flex;
+  background: #ffffff;
+  font-family: "Poppins", sans-serif;
+  overflow: hidden;
+}
+
+.apply-left {
+  width: 62%;
+  height: 100vh;
+  background: #f3efff;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 15px;
+}
+
+.apply-left h1 {
+  font-size: 52px;
+  font-weight: 900;
+  color: #101942;
+  letter-spacing: 2px;
+  margin-bottom: 22px;
+}
+
+.apply-illustration {
+  max-width: 72%;
+  max-height: 52vh;
+  object-fit: contain;
+}
+
+.apply-right {
+  width: 38%;
+  height: 100vh;
+  background: #ffffff;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 12px 28px;
+  overflow: hidden;
+}
+
+.apply-form-box {
+  width: 100%;
+  max-width: 520px;
+}
+
+.apply-form-box h2 {
+  color: #101942;
+  font-size: 26px;
+  font-weight: 700;
+  text-align: center;
+  margin-bottom: 8px;
+}
+
+.apply-input-group {
+  border: 1.5px solid #e1ddf3;
+  border-radius: 14px;
+  padding: 8px 14px;
+  margin-bottom: 10px;
+  background: #ffffff;
+}
+
+.apply-input-group label {
+  font-size: 14px;
+  font-weight: 600;
+  margin-bottom: 5px;
+}
+
+.apply-input-group .form-control,
+.apply-input-group .form-select {
+  font-size: 14px;
+  padding: 8px 10px;
+}
+
+textarea.form-control {
+  min-height: 105px;
+  max-height: 105px;
+  resize: none;
+}
+
+.apply-submit-btn {
+  width: 100%;
+  border: none;
+  border-radius: 14px;
+  padding: 11px;
+  background: linear-gradient(135deg, #7b4ce2, #101942);
+  color: white;
+  font-weight: 700;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  margin-top: 4px;
+}
+
+.alert {
+  padding: 8px 12px;
+  margin-bottom: 10px;
+  font-size: 14px;
+}
