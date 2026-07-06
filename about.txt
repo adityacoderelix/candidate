@@ -56,6 +56,19 @@ Candidate Life Cycle (as demonstrated in the project)
 6. The candidate can either accept the offer, reject the offer or negotiate it
 6. The candidate can also be blacklisted or a cooling period is imposed on the said candidate
 
+Candidate Status stages
+* New Application
+* Shortlisted
+* Rejected
+* Shortlisted
+* Interiew Scheduled
+* In-Person Interview
+* Offered
+* Offer Accepted
+* Offer Rejected
+* Blacklisted
+* Cooling Period
+
 Challenges Faced
 * Handling form validation effectively
 * Managing state across multiple components in React
