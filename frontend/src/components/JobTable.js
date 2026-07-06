@@ -16,7 +16,7 @@ function JobTable({ setSelected, deleteJob, setEditingId, setForm, setShow, filt
 
                     <div className="job-card-footer">
                         <div className="job-actions">
-                            <button className="jobs-buttons" onClick={() => setSelected(job)}><i className="bi bi-eye"></i> View</button>
+                            <button className="jobs-buttons" onClick={() => setSelected(job)}><i className="bi bi-eye"></i></button>
                             <button
                             className="jobs-buttons"
                             onClick={(e) => {
