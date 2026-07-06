@@ -2,7 +2,6 @@ import { Button } from "react-bootstrap";
 import "../pages/Dashboard.css";
 
 function CandidateTable({role, setSelected, deleteCandidate, setForm, setShow, filteredCandidates, setEditingId}) {
-    const validConduct = ["Good", "Average", "Bad"];
 
     const sortedCandidates = [...filteredCandidates].sort(
         (a, b) => new Date(b.createdAt) - new Date(a.createdAt)
@@ -46,19 +45,13 @@ function CandidateTable({role, setSelected, deleteCandidate, setForm, setShow, f
                             <td>{c.jobRole || "-"}</td>
 
                             <td>
-                                {c.applicationDate
-                                ? new Date(c.applicationDate).toLocaleDateString()
-                                : c.createdAt
-                                ? new Date(c.createdAt).toLocaleDateString()
-                                : "-"}
+                                {c.applicationDate ? new Date(c.applicationDate).toLocaleDateString() : c.createdAt
+                                ? new Date(c.createdAt).toLocaleDateString() : "-"}
                             </td>
 
                             <td>
-                                {c.applicationDate
-                                ? new Date(c.applicationDate).toLocaleTimeString()
-                                : c.createdAt
-                                ? new Date(c.createdAt).toLocaleTimeString()
-                                : "-"}
+                                {c.applicationDate ? new Date(c.applicationDate).toLocaleTimeString() : c.createdAt
+                                ? new Date(c.createdAt).toLocaleTimeString() : "-"}
                             </td>
 
                             <td>
@@ -97,7 +90,6 @@ function CandidateTable({role, setSelected, deleteCandidate, setForm, setShow, f
                                             resume: c.resume || "",
                                             offerLetter: c.offerLetter || ""
                                         });
-
                                         setShow(true);
                                     }}
                                 >
