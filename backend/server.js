@@ -21,7 +21,8 @@ app.use(express.urlencoded({ extended: true }));
 
 app.use("/uploads", express.static("uploads"));
 
-mongoose.connect("mongodb://127.0.0.1:27017/cms")
+//mongoose.connect("mongodb://127.0.0.1:27017/cms")
+mongoose.connect(process.env.MONGO_URI)
 .then(() => {console.log('MONGODB CONNECTED')})
 .catch((err) => {console.log('MONGODB CONNECTION FAILED')});
 
