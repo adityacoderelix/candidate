@@ -40,8 +40,8 @@ function Candidates () {
 
     const finalStatuses = ["Offer Accepted", "Offer Rejected", "Rejected", "Blacklisted"];
     const ratingStatuses = ["Shortlisted", "Screening Call", "In-Person Interview", "Negotiation"];
-    const importantStatuses = ["All", "New Application", "Shortlisted", "Interview Scheduled", "In-Person Interview", "Rejected", "Offered", "Offer Accepted"];
-    const otherStatuses = ["Screening Call", "Negotiation", "Blacklisted", "Cooling Period", "Offer Rejected"];
+    const importantStatuses = ["All", "New Application", "Interview Scheduled", "In-Person Interview", "Rejected", "Offered",];
+    const otherStatuses = ["Shortlisted", "Screening Call", "Negotiation", "Blacklisted", "Cooling Period", "Offer Rejected", "Offer Accepted"];
     const conductStatuses = ["Shortlisted", "Screening Call", "Rejected", "Offered", "Cooling Period", "In-Person Interview", "Negotiation", "Blacklisted"];
 
     const [form, setForm] = useState({

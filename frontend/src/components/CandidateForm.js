@@ -5,7 +5,7 @@ import "../pages/Dashboard.css";
 function CandidateForm({ show, setShow, form, setForm, saveCandidate, editingId, setResume, validated, setOfferLetter, error, users, selectedRecipients, setSelectedRecipients, manualRecipients, setManualRecipients, finalStatuses, conductStatuses, jobs
 }) 
 {
-    const ratingStatuses = ["Screening Call", "In-Person Interview", "Shortlisted", "Negotiation"];
+    const ratingStatuses = ["Screening Call", "In-Person Interview", "Shortlisted"];
 
     useEffect(() => {
         if (show) {
@@ -412,7 +412,7 @@ function CandidateForm({ show, setShow, form, setForm, saveCandidate, editingId,
                         </div>
                     )}
 
-                    {(form.status === "Offered" || form.status === "Interview Scheduled") && (
+                    {form.status === "Interview Scheduled" && (
                         <div className="mb-3">
                             <label className="form-label">Send Email To <span className="text-danger">*</span></label>
                             <select multiple className="form-control" value={selectedRecipients}

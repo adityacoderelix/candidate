@@ -122,8 +122,18 @@ function Jobs () {
             <CustomNavbar collapsed={collapsed} setCollapsed={setCollapsed} />
             <Container fluid className={`page-content ${collapsed ? "collapsed-content" : ""}`}>
 
-                <Button className="add-btn" onClick={()=>setShow(true)}>
-                    <i className="bi bi-plus-circle me-2"></i>Add Job Opening
+                <Button className="add-btn" onClick={() => {
+                        setEditingId(null);
+                        setForm({
+                        title: "",
+                        department: "",
+                        openings: "",
+                        jobDescription: ""
+                        });
+                        setShow(true);
+                    }}
+                >
+                <i className="bi bi-plus-circle me-2"></i>Add Job Opening
                 </Button>
                     
                 <div className="d-flex align-items-center mt-3 gap-2 mb-3">

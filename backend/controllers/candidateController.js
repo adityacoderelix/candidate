@@ -36,10 +36,7 @@ export const createCandidate = async (req,res) => {
         ? [req.body.recipients]
         : [];
 
-        const formattedRecipients = recipients.map(email => ({
-            email,
-            name: ""
-        }))
+        const formattedRecipients = recipients.map(email => ({email,name: ""}))
 
         if (typeof req.body.conductRecords === "string") {
             req.body.conductRecords = JSON.parse(req.body.conductRecords);
@@ -101,14 +98,7 @@ export const updateCandidate = async (req, res) => {
         }
 
         const changedBy = req.user?.name || "Unknown User";
-
-        const finalStatuses = [
-            "Offer Accepted",
-            "Offer Rejected",
-            "Rejected",
-            "Blacklisted",
-            "Cooling Period"
-        ];
+        const finalStatuses = ["Offer Accepted", "Offer Rejected", "Rejected", "Blacklisted", "Cooling Period"];
 
         if (
             finalStatuses.includes(oldCandidate.status) &&
@@ -167,23 +157,12 @@ export const updateCandidate = async (req, res) => {
             oldCandidate.offerLetter = `http://localhost:5000/uploads/offerLetters/${req.files.offerLetter[0].filename}`;
         }
 
-        const recipients = Array.isArray(req.body.recipients)
-            ? req.body.recipients
-            : req.body.recipients
-            ? [req.body.recipients]
-            : [];
+        const recipients = Array.isArray(req.body.recipients) ? req.body.recipients : req.body.recipientsm? [req.body.recipients] : [];
 
-        oldCandidate.recipients = recipients.map((email) => ({
-            email,
-            name: ""
-        }));
-
-        if (logs.length > 0) {
-            oldCandidate.changeLogs.push(...logs);
-        }
+        oldCandidate.recipients = recipients.map((email) => ({email, name: ""}));
+        if (logs.length > 0) { oldCandidate.changeLogs.push(...logs);}
 
         const updated = await oldCandidate.save();
-
         res.json(updated);
 
         const isInterviewScheduled =
@@ -290,31 +269,6 @@ export const updateCandidate = async (req, res) => {
                                     <p><strong>Interview Date:</strong> ${updated.interviewDate || "Not provided"}</p>
                                     <p><strong>Interview Time:</strong> ${updated.interviewTime || "Not provided"}</p>
                                     <p><strong>Interview Location:</strong> ${updated.interviewLocation || "Not provided"}</p>
-                                    <p><strong>Updated By:</strong> ${changedBy}</p>
-                                </div>
-
-                                ${extraInfoHtml}
-                            `
-                        })
-                    });
-                }
-            }
-
-            if (isOffered && recipients.length > 0) {
-                for (const email of recipients) {
-                    await sendEmail({
-                        to: email,
-                        subject: `Candidate Offered | ${updated.name}`,
-                        html: emailTemplate({
-                            title: "Candidate Moved to Offered Stage",
-                            subtitle: "A candidate has been moved to the Offered stage.",
-                            body: `
-                                <div style="padding:18px;background:#f3f6fb;border-radius:8px;">
-                                    <p><strong>Candidate Name:</strong> ${updated.name}</p>
-                                    <p><strong>Candidate ID:</strong> ${updated.candidateId}</p>
-                                    <p><strong>Email:</strong> ${updated.email}</p>
-                                    <p><strong>Phone:</strong> ${updated.phone}</p>
-                                    <p><strong>Status:</strong> ${updated.status}</p>
                                     <p><strong>Updated By:</strong> ${changedBy}</p>
                                 </div>
 
