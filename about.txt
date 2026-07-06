@@ -48,7 +48,7 @@ System Workflow
 7. Data can be searched, filtered, and managed easily
 
 Candidate Life Cycle (as demonstrated in the project)
-1. New application
+1. Candidate applies for a job opening on the company website -> New Application
 2. Either the candidate is directly shortlisted or rejected or given a screening call
 3. An interview is then scheduled for the candidate
 4. The In-Person Interview is completed for the candidate
@@ -62,7 +62,7 @@ Challenges Faced
 * Debugging API errors such as 500 and 401 responses
 * Ensuring proper data flow between frontend and backend
 * Styling and UI consistency
-* Implementing mailtrap effectively
+* Implementing emails effectively
 
 Learning Outcomes
 * Gained hands-on experience with the MERN stack
