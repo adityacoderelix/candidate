@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useCallback } from "react";
 import axios from "axios";
 import { Container, Button, Alert } from "react-bootstrap";
 import CustomNavbar from "../components/CustomNavbar";
@@ -34,7 +34,7 @@ function Profile() {
         }
     }, [role]);
 
-    const fetchUsers = async () => {
+    const fetchUsers = useCallback(async () => {
         try {
             const res = await axios.get("http://localhost:5000/auth/users", {
                 headers: { Authorization: token }
@@ -44,7 +44,7 @@ function Profile() {
         } catch {
             setError("Failed to load users");
         }
-    };
+    });
 
     const approveUser = async (userId) => {
         try {

@@ -1,5 +1,5 @@
 import CustomNavbar from "../components/CustomNavbar.js";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import { Form, Button, Alert, Container, Card } from "react-bootstrap";
 import axios from "axios";
 import "./Dashboard.css";
@@ -28,10 +28,10 @@ function Company() {
     const validatePhone = (phone) =>
         /^[0-9]{10}$/.test(phone);
 
-    const fetchCompanyDetails = async () => {
+    const fetchCompanyDetails = useCallback(async () => {
         try {
             const res = await axios.get("http://localhost:5000/company-details", {
-                headers: { Authorization: token }
+                headers: { Authorization: `Bearer ${token}` }
             });
 
             const details = Array.isArray(res.data) ? res.data[0] : res.data;
@@ -48,16 +48,26 @@ function Company() {
         } catch (err) {
             setError(err.response?.data || "Failed to load company details");
         }
-    };
+    }, [token]);
 
     useEffect(() => {
         fetchCompanyDetails();
-    }, []);
+    }, [fetchCompanyDetails]);
 
     const handleChange = (e) => {
+        const { name, value } = e.target;
+
+        if ( name === "companyPhone") {
+            setForm({
+                ...form,
+                [name]: value.replace(/\D/g, "")
+            });
+            return;
+        }
+
         setForm({
             ...form,
-            [e.target.name]: e.target.value
+            [name]: value
         });
     };
 
@@ -93,21 +103,21 @@ function Company() {
                 await axios.put(
                     `http://localhost:5000/company-details/${companyDetails._id}`,
                     form,
-                    { headers: { Authorization: token } }
+                    { headers: { Authorization: `Bearer ${token}` } }
                 );
                 setSuccess("Company details updated successfully!");
             } else {
                 await axios.post(
                     "http://localhost:5000/company-details",
                     form,
-                    { headers: { Authorization: token } }
+                    { headers: { Authorization: `Bearer ${token}` } }
                 );
                 setSuccess("Company details saved successfully!");
             }
 
             setEditing(false);
             setValidated(false);
-            fetchCompanyDetails();
+            await fetchCompanyDetails();
 
         } catch (err) {
             setError(err.response?.data || "Something went wrong");
@@ -230,10 +240,8 @@ function Company() {
                                                 </Button>
 
                                                 {companyDetails && (
-                                                    <Button
-                                                        className="apply-submit-btn"
-                                                        onClick={() => setEditing(false)}
-                                                    >
+                                                    <Button className="apply-submit-btn" type="button"
+                                                        onClick={() => setEditing(false)}>
                                                         Cancel
                                                     </Button>
                                                 )}

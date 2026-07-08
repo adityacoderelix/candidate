@@ -1,7 +1,7 @@
 import { Card, Row, Col, Button, Container } from "react-bootstrap";
 import { BriefcaseFill, PeopleFill, ClipboardCheckFill } from "react-bootstrap-icons";
 import { useNavigate } from "react-router-dom";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useCallback } from "react";
 import axios from "axios";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap-icons/font/bootstrap-icons.css";
@@ -18,9 +18,7 @@ function Dashboard () {
     const [candidates, setCandidates] = useState([]);
     const [collapsed, setCollapsed] = useState(false);
 
-    useEffect(() => { fetchData(); }, []);
-
-    const fetchData = async () => {
+    const fetchData = useCallback(async () => {
         try {
             const config = {
                 headers: {
@@ -37,7 +35,9 @@ function Dashboard () {
         } catch (err) {
             console.log(err);
         }
-    };
+    }, [token]);
+    
+    useEffect(() => { fetchData(); }, [fetchData]);
 
     const totalJobs = jobs.length;
     const totalApplicants = candidates.length;

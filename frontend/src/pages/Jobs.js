@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useCallback } from "react";
 import axios from "axios";
 import { Container, Button, Modal } from "react-bootstrap";
 import CustomNavbar from "../components/CustomNavbar.js";
@@ -30,16 +30,16 @@ function Jobs () {
 
     useEffect(() => { setCurrentPage(1); }, [search, sortBy]);
 
-    const fetchJobs = async() => {
+    const fetchJobs = useCallback(async() => {
         const res = await axios.get("http://localhost:5000/jobs",
             {
                 headers: { Authorization: token }
             }
         );
         setJobs(res.data);
-    }
+    }, [token]);
 
-    useEffect(() => { fetchJobs(); }, []);
+    useEffect(() => { fetchJobs(); }, [fetchJobs]);
 
     const addJob = async() => {
         try {

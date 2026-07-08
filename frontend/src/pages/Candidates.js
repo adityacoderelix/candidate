@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useCallback} from "react";
 import axios from "axios";
 import { Container, Button, Modal } from "react-bootstrap";
 
@@ -7,7 +7,6 @@ import CandidateTable from "../components/CandidateTable.js";
 import CandidateForm from "../components/CandidateForm.js";
 import CandidateDetails from "../components/CandidateDetails.js";
 import './Dashboard.css';
-import { data } from "react-router-dom";
 
 function Candidates () {
     const token = localStorage.getItem("token");
@@ -75,7 +74,7 @@ function Candidates () {
     useEffect(() => {
         if (selected) {
             axios.get(`http://localhost:5000/notes/${selected._id}`, {
-                headers: { Authorization: token }
+                headers: { Authorization: `Bearer ${token}` }
             })
             .then(res => {
                 setNotes(Array.isArray(res.data) ? res.data : []);
@@ -95,10 +94,6 @@ function Candidates () {
     }, [selected, token]);
 
     useEffect(() => {
-        getCompanyDetails();
-    }, []);
-
-    useEffect(() => {
         if (form.status === "Interview Scheduled" && companyDetails?.companyAddress) {
             setForm((prev) => ({
                 ...prev,
@@ -108,7 +103,7 @@ function Candidates () {
         }}, [form.status, companyDetails]
     );
 
-    const getCompanyDetails = async () => {
+    const getCompanyDetails = useCallback(async () => {
         try {
             const res = await axios.get("http://localhost:5000/company-details",
                 {
@@ -122,18 +117,22 @@ function Candidates () {
         } catch (err) {
             console.log(err);
         }
-    }
+    }, [token]);
 
-    const fetchJobs = async () => {
+    useEffect(() => {
+        getCompanyDetails();
+    }, [getCompanyDetails]);
+
+    const fetchJobs = useCallback(async () => {
         try {
             const res = await axios.get("http://localhost:5000/jobs", {
-                headers: { Authorization: token }
+                headers: { Authorization: `Bearer ${token}` }
             });
             setJobs(res.data);
         } catch (err) {
             console.log(err);
         }
-    };
+    }, [token]);
 
     useEffect(() => { 
         setCurrentPage(1); 
@@ -141,25 +140,14 @@ function Candidates () {
 
     const currentNote = notes.find(f => f.status?.trim() === selectedStatus?.trim());
 
-    const fetchCandidates = async() => {
+    const fetchCandidates = useCallback(async() => {
         const res = await axios.get("http://localhost:5000/candidates",
         {
-            headers: { Authorization: token }
+            headers: { Authorization: `Bearer ${token}` }
         }
         );
         setCandidates(res.data);
-    }
-
-    useEffect(() => { 
-        fetchCandidates();
-        fetchJobs();
-
-        const interval = setInterval(() => {
-            fetchCandidates();
-        }, 10000);
-
-        return () => clearInterval(interval);
-    }, [] );
+    }, [token]);
 
     const saveCandidate = async (e) => {
         setError("");
@@ -298,13 +286,13 @@ function Candidates () {
                     note: form.note
                 },
                 {
-                    headers: { Authorization: token }
+                    headers: { Authorization: `Bearer ${token}` }
                 }
                 );
             }
 
             const refreshed = await axios.get("http://localhost:5000/candidates", {
-                headers: { Authorization: token }
+                headers: { Authorization: `Bearer ${token}` }
             });
 
             setCandidates(refreshed.data);
@@ -321,29 +309,34 @@ function Candidates () {
     const deleteCandidate = async(id) => {
         await axios.delete(`http://localhost:5000/candidates/${id}`,
         {
-            headers: { Authorization: token }
+            headers: { Authorization: `Bearer ${token}` }
         }
         );
         fetchCandidates();
     }
 
-    const fetchUsers = async () => {
+    const fetchUsers = useCallback(async () => {
         try {
             const res = await axios.get("http://localhost:5000/auth/users-list", {
-                headers: { Authorization: token}
+                headers: { Authorization: `Bearer ${token}` }
             });
             setUsers(res.data);
 
         } catch (err) {
             console.log(err);
         }
-    }
+    }, [token]);
 
     useEffect(() => {
         fetchCandidates();
         fetchJobs();
         fetchUsers();
-    }, []);
+
+        const interval = setInterval(fetchCandidates, 10000);
+
+        return () => clearInterval(interval);
+
+    }, [fetchCandidates,fetchJobs, fetchUsers]);
 
     const resetForm = () => {
         setEditingId(null);
@@ -457,7 +450,7 @@ function Candidates () {
                 }}><i className="bi bi-plus-circle me-2"></i>Add Candidate</Button>
 
                 <div className="d-flex align-items-center mt-3 gap-2 mb-4">
-                    <i class="bi bi-search-heart-fill"></i>
+                    <i className="bi bi-search-heart-fill"></i>
                     <input type="text" placeholder="Search Candidates By Name" 
                         className="form-control search-input" value={search} onChange={(e)=> 
                         setSearch(e.target.value)} />
@@ -516,7 +509,7 @@ function Candidates () {
 
                 <CandidateTable candidates={candidates} role={role} setSelected={setSelected} 
                     deleteCandidate={openDeleteModule} setEditingId={setEditingId} setForm={setForm} 
-                    setShow={setShow}  filteredCandidates={currentCandidates} editingId={editingId} setEditingId={setEditingId} 
+                    setShow={setShow}  filteredCandidates={currentCandidates} editingId={editingId} 
                 />
 
                 <div className="d-flex justify-content-center mt-3 gap-2">

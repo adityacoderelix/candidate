@@ -28,7 +28,7 @@ function CandidateForm({ show, setShow, form, setForm, saveCandidate, editingId,
             setResume(null);
             setOfferLetter(null);
         }
-    }, [show]);
+    }, [show, form.conductRecords, form.interviewRounds, form.ratingRecords, form.status, setForm, setSelectedRecipients, setManualRecipients, setResume, setOfferLetter]);
 
     const closeModal = () => {
         setForm((prev) => ({

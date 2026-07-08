@@ -2,14 +2,13 @@ import { useState } from "react";
 import axios from "axios";
 import Alert from 'react-bootstrap/Alert';
 import { Container, Form, Button } from "react-bootstrap";
-import { useNavigate, Link } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 import '../App.css';
 import './Dashboard.css';
 
 function Login () {
     const [error, setError] = useState("");
-    const navigate = useNavigate();
     const [form, setForm] = useState({ email: "", password: "" });
 
     const validateEmail = (email) => {
