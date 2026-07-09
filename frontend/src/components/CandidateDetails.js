@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useMemo } from "react";
 import { Button, Modal } from "react-bootstrap";
 
 function CandidateDetails({selected, setSelected, selectedStatus, setSelectedStatus, currentNote, notes, getCoolingDaysLeft
@@ -10,18 +10,25 @@ function CandidateDetails({selected, setSelected, selectedStatus, setSelectedSta
 
     const statusClass = (status) => `status-badge status-${status?.toLowerCase().replace(/\s+/g, "-")}`;
     
-    const conductRecords = selected?.conductRecords || [];
-    const conductStages = [...new Set(conductRecords.map((record) => record.stage))];
+    const conductRecords = useMemo(
+    () => selected?.conductRecords || [],
+    [selected]
+);
 
-    useEffect(() => {
-        if (conductStages.length > 0) {
-            setSelectedConductStage(conductStages[0]);
-            setSelectedConductIndex(0);
-        } else {
-            setSelectedConductStage("");
-            setSelectedConductIndex(0);
-        }
-    }, [selected]);
+const conductStages = useMemo(
+    () => [...new Set(conductRecords.map((record) => record.stage))],
+    [conductRecords]
+);
+
+useEffect(() => {
+    if (conductStages.length > 0) {
+        setSelectedConductStage(conductStages[0]);
+    } else {
+        setSelectedConductStage("");
+    }
+
+    setSelectedConductIndex(0);
+}, [conductStages]);
 
     if (!selected) return null;
 
@@ -441,7 +448,7 @@ function DocumentCard({ title, file }) {
 
             {file && (
                 <a href={file} target="_blank" rel="noopener noreferrer">
-                    <i class="bi bi-arrow-up-right-circle document-icon"></i>
+                    <i className="bi bi-arrow-up-right-circle document-icon"></i>
                 </a>
             )}
         </div>

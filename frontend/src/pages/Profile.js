@@ -28,12 +28,6 @@ function Profile() {
 
     const pendingUsers = users.filter((user) => !user.isApproved);
 
-    useEffect(() => {
-        if (role === "Admin") {
-            fetchUsers();
-        }
-    }, [role]);
-
     const fetchUsers = useCallback(async () => {
         try {
             const res = await axios.get("http://localhost:5000/auth/users", {
@@ -44,7 +38,13 @@ function Profile() {
         } catch {
             setError("Failed to load users");
         }
-    });
+    }, [token]);
+
+    useEffect(() => {
+        if (role === "Admin") {
+            fetchUsers();
+        }
+    }, [role, fetchUsers]);
 
     const approveUser = async (userId) => {
         try {

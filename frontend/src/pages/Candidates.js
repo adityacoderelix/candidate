@@ -29,7 +29,7 @@ function Candidates () {
     const [selectedRecipients, setSelectedRecipients] = useState([]);
     const [manualRecipients, setManualRecipients] = useState("");
     const [selectedStatus, setSelectedStatus] = useState("");
-    const [showDeleteModule, setShowDeleteModule] = useState("");
+    const [showDeleteModule, setShowDeleteModule] = useState(false);
     const [deleteId, setDeleteId] = useState("");
     const [companyDetails, setCompanyDetails] = useState(null);
     const [collapsed, setCollapsed] = useState(false);
@@ -74,7 +74,7 @@ function Candidates () {
     useEffect(() => {
         if (selected) {
             axios.get(`http://localhost:5000/notes/${selected._id}`, {
-                headers: { Authorization: `Bearer ${token}` }
+                headers: { Authorization: `Bearer ${token}`,"Content-Type": "multipart/form-data"  }
             })
             .then(res => {
                 setNotes(Array.isArray(res.data) ? res.data : []);

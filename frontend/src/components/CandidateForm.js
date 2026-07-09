@@ -29,7 +29,7 @@ function CandidateForm({ show, setShow, form, setForm, saveCandidate, editingId,
             setOfferLetter(null);
         }
     }, [show, form.conductRecords, form.interviewRounds, form.ratingRecords, form.status, setForm, setSelectedRecipients, setManualRecipients, setResume, setOfferLetter]);
-
+    
     const closeModal = () => {
         setForm((prev) => ({
             ...prev,
