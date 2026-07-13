@@ -11,24 +11,24 @@ function CandidateDetails({selected, setSelected, selectedStatus, setSelectedSta
     const statusClass = (status) => `status-badge status-${status?.toLowerCase().replace(/\s+/g, "-")}`;
     
     const conductRecords = useMemo(
-    () => selected?.conductRecords || [],
-    [selected]
-);
+        () => selected?.conductRecords || [],
+        [selected]
+    );
 
-const conductStages = useMemo(
-    () => [...new Set(conductRecords.map((record) => record.stage))],
-    [conductRecords]
-);
+    const conductStages = useMemo(
+        () => [...new Set(conductRecords.map((record) => record.stage))],
+        [conductRecords]
+    );
 
-useEffect(() => {
-    if (conductStages.length > 0) {
-        setSelectedConductStage(conductStages[0]);
-    } else {
-        setSelectedConductStage("");
-    }
+    useEffect(() => {
+        if (conductStages.length > 0) {
+            setSelectedConductStage(conductStages[0]);
+        } else {
+            setSelectedConductStage("");
+        }
 
-    setSelectedConductIndex(0);
-}, [conductStages]);
+        setSelectedConductIndex(0);
+    }, [conductStages]);
 
     if (!selected) return null;
 

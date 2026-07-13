@@ -15,13 +15,12 @@ import logger from "./middleware/logMiddleware.js";
 
 const app = express();
 
-app.use(cors());
+app.use(cors({ origin: process.env.FRONTEND_URL, credentials: true}));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 app.use("/uploads", express.static("uploads"));
 
-//mongoose.connect("mongodb://127.0.0.1:27017/cms")
 mongoose.connect(process.env.MONGO_URI)
 .then(() => {console.log('MONGODB CONNECTED')})
 .catch((err) => {console.log('MONGODB CONNECTION FAILED')});
