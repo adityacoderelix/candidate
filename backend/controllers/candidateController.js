@@ -13,15 +13,15 @@ export const createCandidate = async (req,res) => {
         const phoneRegex = /^[0-9]{10}$/;
 
         const resume = req.files?.resume?.[0]
-        ? `http://localhost:5000/uploads/resumes/${req.files.resume[0].filename}`
+        ? `${process.env.BACKEND_URL}/uploads/resumes/${req.files.resume[0].filename}`
         : "";
 
         const payslip = req.files?.payslip?.[0]
-        ? `http://localhost:5000/uploads/payslips/${req.files.payslip[0].filename}`
+        ? `${process.env.BACKEND_URL}/uploads/payslips/${req.files.payslip[0].filename}`
         : "";
 
         const offerLetter = req.files?.offerLetter?.[0]
-        ? `http://localhost:5000/uploads/offerLetters/${req.files.offerLetter[0].filename}`
+        ? `${process.env.BACKEND_URL}/uploads/offerLetters/${req.files.offerLetter[0].filename}`
         : "";
 
         if (!phoneRegex.test(req.body.phone)) {
@@ -146,15 +146,15 @@ export const updateCandidate = async (req, res) => {
         }
 
         if (req.files?.resume?.[0]) {
-            oldCandidate.resume = `http://localhost:5000/uploads/resumes/${req.files.resume[0].filename}`;
+            oldCandidate.resume = `${process.env.BACKEND_URL}/uploads/resumes/${req.files.resume[0].filename}`;
         }
 
         if (req.files?.payslip?.[0]) {
-            oldCandidate.payslip = `http://localhost:5000/uploads/payslips/${req.files.payslip[0].filename}`;
+            oldCandidate.payslip = `${process.env.BACKEND_URL}/uploads/payslips/${req.files.payslip[0].filename}`;
         }
 
         if (req.files?.offerLetter?.[0]) {
-            oldCandidate.offerLetter = `http://localhost:5000/uploads/offerLetters/${req.files.offerLetter[0].filename}`;
+            oldCandidate.offerLetter = `${process.env.BACKEND_URL}/uploads/offerLetters/${req.files.offerLetter[0].filename}`;
         }
 
         const recipients = Array.isArray(req.body.recipients) ? req.body.recipients : req.body.recipientsm? [req.body.recipients] : [];
@@ -313,7 +313,7 @@ export const createCandidateByForm = async (req,res) => {
         }
 
         const resume = req.files?.resume?.[0]
-        ? `http://localhost:5000/uploads/resumes/${req.files.resume[0].filename}`
+        ? `${process.env.BACKEND_URL}/uploads/resumes/${req.files.resume[0].filename}`
         : "";
 
         const count = await Candidate.countDocuments();
