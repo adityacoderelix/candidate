@@ -20,7 +20,8 @@ dist/
 .DS_Store
 Thumbs.db
 
-# Environment variables
-.env
-.env.*
+# Environment files
+backend/.env
+backend/.env.*
 !.env.example
+!backend/.env.example
