@@ -41,8 +41,8 @@ export const register = async (req,res) => {
 
         res.json("Registration request sent. Wait for admin approval");
 
-        const approveLink = `http://localhost:5000/auth/approve-user-link/${user._id}`;
-
+        const approveLink = `${process.env.BACKEND_URL}/auth/approve-user-link/${user._id}`;
+        
         const admins = await User.find({
             role: "Admin",
             isApproved: true
