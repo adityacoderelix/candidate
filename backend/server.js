@@ -25,6 +25,10 @@ mongoose.connect(process.env.MONGO_URI)
 .then(() => {console.log('MONGODB CONNECTED')})
 .catch((err) => {console.log('MONGODB CONNECTION FAILED')});
 
+app.get('/', (req,res) => {
+  res.send("Root route");
+})
+
 app.use(logger);
 
 app.use("/auth", authRoutes);
