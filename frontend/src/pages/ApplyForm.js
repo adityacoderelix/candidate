@@ -4,6 +4,7 @@ import { Form, Button, Alert } from "react-bootstrap";
 import "./ApplyForm.css";
 
 function ApplyForm() {
+    const API_URL = process.env.REACT_APP_API_URL;
     const [form, setForm] = useState({
         name: "",
         phone: "",
@@ -31,7 +32,7 @@ function ApplyForm() {
     };
 
     useEffect(() => {
-        axios.get("http://localhost:5000/jobs/public")
+        axios.get(`${API_URL}/jobs/public`)
             .then((res) => {
                 console.log("Jobs fetched:", res.data);
 
@@ -94,7 +95,7 @@ function ApplyForm() {
         try {
             setLoading(true);
 
-            await axios.post("http://localhost:5000/candidates/apply", data, {
+            await axios.post(`${API_URL}/candidates/apply`, data, {
                 headers: {
                     "Content-Type": "multipart/form-data"
                 }

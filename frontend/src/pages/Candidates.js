@@ -9,6 +9,7 @@ import CandidateDetails from "../components/CandidateDetails.js";
 import './Dashboard.css';
 
 function Candidates () {
+    const API_URL = process.env.REACT_APP_API_URL;
     const token = localStorage.getItem("token");
     const role = localStorage.getItem("role");
 
@@ -73,7 +74,7 @@ function Candidates () {
 
     useEffect(() => {
         if (selected) {
-            axios.get(`http://localhost:5000/notes/${selected._id}`, {
+            axios.get(`${API_URL}/notes/${selected._id}`, {
                 headers: { Authorization: `Bearer ${token}`,"Content-Type": "multipart/form-data"  }
             })
             .then(res => {
@@ -105,7 +106,7 @@ function Candidates () {
 
     const getCompanyDetails = useCallback(async () => {
         try {
-            const res = await axios.get("http://localhost:5000/company-details",
+            const res = await axios.get(`${API_URL}/company-details`,
                 {
                     headers: { Authorization: `Bearer ${token}`}
                 }
@@ -125,7 +126,7 @@ function Candidates () {
 
     const fetchJobs = useCallback(async () => {
         try {
-            const res = await axios.get("http://localhost:5000/jobs", {
+            const res = await axios.get(`${API_URL}/jobs`, {
                 headers: { Authorization: `Bearer ${token}` }
             });
             setJobs(res.data);
@@ -141,7 +142,7 @@ function Candidates () {
     const currentNote = notes.find(f => f.status?.trim() === selectedStatus?.trim());
 
     const fetchCandidates = useCallback(async() => {
-        const res = await axios.get("http://localhost:5000/candidates",
+        const res = await axios.get(`${API_URL}/candidates`,
         {
             headers: { Authorization: `Bearer ${token}` }
         }
@@ -260,7 +261,7 @@ function Candidates () {
             let candidateId;
 
             if (editingId) {
-                await axios.put(`http://localhost:5000/candidates/${editingId}`, formData,
+                await axios.put(`${API_URL}/candidates/${editingId}`, formData,
                     {
                         headers: { Authorization: token, "Content-Type": "multipart/form-data" }
                     }
@@ -268,7 +269,7 @@ function Candidates () {
                 candidateId = editingId;
 
             } else {
-                const res = await axios.post("http://localhost:5000/candidates", formData,
+                const res = await axios.post(`${API_URL}/candidates`, formData,
                     {
                         headers: { Authorization: token, "Content-Type": "multipart/form-data"}
                     }
@@ -279,7 +280,7 @@ function Candidates () {
             }
 
             if (form.note.trim() !== "") {
-                await axios.post("http://localhost:5000/notes",
+                await axios.post(`${API_URL}/notes`,
                 {
                     candidateId,
                     status: form.status,
@@ -291,7 +292,7 @@ function Candidates () {
                 );
             }
 
-            const refreshed = await axios.get("http://localhost:5000/candidates", {
+            const refreshed = await axios.get(`${API_URL}/candidates`, {
                 headers: { Authorization: `Bearer ${token}` }
             });
 
@@ -307,7 +308,7 @@ function Candidates () {
     };
 
     const deleteCandidate = async(id) => {
-        await axios.delete(`http://localhost:5000/candidates/${id}`,
+        await axios.delete(`${API_URL}/candidates/${id}`,
         {
             headers: { Authorization: `Bearer ${token}` }
         }
@@ -317,7 +318,7 @@ function Candidates () {
 
     const fetchUsers = useCallback(async () => {
         try {
-            const res = await axios.get("http://localhost:5000/auth/users-list", {
+            const res = await axios.get(`${API_URL}/auth/users-list`, {
                 headers: { Authorization: `Bearer ${token}` }
             });
             setUsers(res.data);

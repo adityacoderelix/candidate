@@ -8,6 +8,7 @@ import '../App.css';
 import './Dashboard.css';
 
 function Login () {
+    const API_URL = process.env.REACT_APP_API_URL;
     const [error, setError] = useState("");
     const [form, setForm] = useState({ email: "", password: "" });
 
@@ -24,7 +25,7 @@ function Login () {
         }
 
         try {
-            const res = await axios.post("http://localhost:5000/auth/login", form);
+            const res = await axios.post(`${API_URL}/auth/login`, form);
 
             localStorage.setItem("token", res.data.token);
             localStorage.setItem("role", res.data.user?.role || res.data.role);

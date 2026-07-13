@@ -8,6 +8,7 @@ import JobForm from "../components/JobForm.js";
 import './Dashboard.css';
 
 function Jobs () {
+    const API_URL = process.env.REACT_APP_API_URL;
     const token = localStorage.getItem("token");
     const [jobs, setJobs] = useState([]);
     const [show, setShow] = useState(false);
@@ -31,7 +32,7 @@ function Jobs () {
     useEffect(() => { setCurrentPage(1); }, [search, sortBy]);
 
     const fetchJobs = useCallback(async() => {
-        const res = await axios.get("http://localhost:5000/jobs",
+        const res = await axios.get(`${API_URL}/jobs`,
             {
                 headers: { Authorization: token }
             }
@@ -44,13 +45,13 @@ function Jobs () {
     const addJob = async() => {
         try {
             if (editingId !== null) {
-                await axios.put(`http://localhost:5000/jobs/${editingId}`,form,
+                await axios.put(`${API_URL}/jobs/${editingId}`,form,
                     {
                         headers: { Authorization: token }
                     }
                 );
             } else {
-                await axios.post( "http://localhost:5000/jobs",form,
+                await axios.post( `${API_URL}/jobs`,form,
                 {
                     headers: { Authorization: token }
                 }
@@ -72,7 +73,7 @@ function Jobs () {
     };
 
     const deleteJob = async(id) => {
-        await axios.delete(`http://localhost:5000/jobs/${id}`,
+        await axios.delete(`${API_URL}/jobs/${id}`,
         {
             headers: { Authorization: token }
         }

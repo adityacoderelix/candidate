@@ -11,6 +11,7 @@ import '../App.css';
 import './Dashboard.css';
 
 function Dashboard () {
+    const API_URL = process.env.REACT_APP_API_URL;
     const navigate = useNavigate();
     const token = localStorage.getItem("token");
 
@@ -26,8 +27,8 @@ function Dashboard () {
                 }
             };
 
-            const jobsRes = await axios.get("http://localhost:5000/jobs", config);
-            const candidateRes = await axios.get("http://localhost:5000/candidates", config);
+            const jobsRes = await axios.get(`${API_URL}/jobs`, config);
+            const candidateRes = await axios.get(`${API_URL}/candidates`, config);
 
             setJobs(jobsRes.data);
             setCandidates(candidateRes.data);

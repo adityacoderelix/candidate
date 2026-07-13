@@ -5,6 +5,7 @@ import axios from "axios";
 import "./Dashboard.css";
 
 function Company() {
+    const API_URL = process.env.REACT_APP_API_URL;
     const token = localStorage.getItem("token");
 
     const [companyDetails, setCompanyDetails] = useState(null);
@@ -30,7 +31,7 @@ function Company() {
 
     const fetchCompanyDetails = useCallback(async () => {
         try {
-            const res = await axios.get("http://localhost:5000/company-details", {
+            const res = await axios.get(`${API_URL}/company-details`, {
                 headers: { Authorization: `Bearer ${token}` }
             });
 
@@ -101,14 +102,14 @@ function Company() {
         try {
             if (companyDetails?._id) {
                 await axios.put(
-                    `http://localhost:5000/company-details/${companyDetails._id}`,
+                    `${API_URL}/company-details/${companyDetails._id}`,
                     form,
                     { headers: { Authorization: `Bearer ${token}` } }
                 );
                 setSuccess("Company details updated successfully!");
             } else {
                 await axios.post(
-                    "http://localhost:5000/company-details",
+                    `${API_URL}/company-details`,
                     form,
                     { headers: { Authorization: `Bearer ${token}` } }
                 );

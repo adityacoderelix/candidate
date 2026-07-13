@@ -6,6 +6,7 @@ import PasswordResetModule from "../components/PasswordResetModule";
 import "./Dashboard.css";
 
 function Profile() {
+    const API_URL = process.env.REACT_APP_API_URL;
     const token = localStorage.getItem("token");
     const role = localStorage.getItem("role");
     const [collapsed, setCollapsed] = useState(false);
@@ -30,7 +31,7 @@ function Profile() {
 
     const fetchUsers = useCallback(async () => {
         try {
-            const res = await axios.get("http://localhost:5000/auth/users", {
+            const res = await axios.get(`${API_URL}/auth/users`, {
                 headers: { Authorization: token }
             });
 
@@ -49,7 +50,7 @@ function Profile() {
     const approveUser = async (userId) => {
         try {
             await axios.put(
-                `http://localhost:5000/auth/approve-user/${userId}`,
+                `${API_URL}/auth/approve-user/${userId}`,
                 {},
                 { headers: { Authorization: token } }
             );
@@ -65,7 +66,7 @@ function Profile() {
 
     const rejectUser = async (userId) => {
         try {
-            await axios.delete(`http://localhost:5000/auth/delete-user/${userId}`, {
+            await axios.delete(`${API_URL}/auth/delete-user/${userId}`, {
                 headers: { Authorization: token }
             });
 
@@ -83,7 +84,7 @@ function Profile() {
             const userId = localStorage.getItem("userId");
 
             const res = await axios.put(
-                `http://localhost:5000/auth/update-profile/${userId}`,
+                `${API_URL}auth/update-profile/${userId}`,
                 profile,
                 { headers: { Authorization: token } }
             );
@@ -108,7 +109,7 @@ function Profile() {
             }
 
             await axios.put(
-                `http://localhost:5000/auth/reset-password/${userId}`,
+                `${API_URL}/auth/reset-password/${userId}`,
                 { password: passwords[userId] },
                 { headers: { Authorization: token } }
             );
@@ -124,7 +125,7 @@ function Profile() {
 
     const deleteUser = async (userId) => {
         try {
-            await axios.delete(`http://localhost:5000/auth/delete-user/${userId}`, {
+            await axios.delete(`${API_URL}/auth/delete-user/${userId}`, {
                 headers: { Authorization: token }
             });
 

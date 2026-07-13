@@ -4,6 +4,7 @@ import { Container, Form, Button, Alert } from "react-bootstrap";
 import { useNavigate, useParams } from "react-router-dom";
 
 function ResetPassword () {
+    const API_URL = process.env.REACT_APP_API_URL;
     const { token } = useParams();
     const navigate = useNavigate();
 
@@ -23,7 +24,7 @@ function ResetPassword () {
         }
 
         try {
-            const res = await axios.post(`http://localhost:5000/auth/reset-password/${token}`, { password} );
+            const res = await axios.post(`${API_URL}/auth/reset-password/${token}`, { password} );
             setMessage(res.data.message);
 
             setTimeout(() => {

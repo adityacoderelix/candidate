@@ -4,6 +4,7 @@ import { Container, Form, Button, Alert } from "react-bootstrap";
 import { Link } from "react-router-dom";
 
 function ForgotPassword () {
+    const API_URL = process.env.REACT_APP_API_URL;
     const [email, setEmail] = useState("");
     const [message, setMessage] = useState("");
     const [error, setError] = useState("");
@@ -14,7 +15,7 @@ function ForgotPassword () {
         setError("");
 
         try {
-            const res = await axios.post("http://localhost:5000/auth/forgot-password", {email});
+            const res = await axios.post(`${API_URL}/auth/forgot-password`, {email});
             setMessage(res.data.message);
 
         } catch (err) {

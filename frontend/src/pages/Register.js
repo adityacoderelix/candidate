@@ -7,6 +7,7 @@ import "../App.css";
 import './Dashboard.css';
 
 function Register () {
+    const API_URL = process.env.REACT_APP_API_URL;
     const [error, setError] = useState("");
     const [success, setSuccess] = useState("");
     const [loading, setLoading] = useState(false);
@@ -31,7 +32,7 @@ function Register () {
     const checkEmailExists = async (email) => {
         try {
             const res = await axios.post(
-            "http://localhost:5000/auth/check-email",
+            `${API_URL}/auth/check-email`,
             { email }
         );
 
@@ -84,7 +85,7 @@ function Register () {
 
         try {
             const emailCheck = await axios.post(
-                "http://localhost:5000/auth/check-email",
+                `${API_URL}/auth/check-email`,
                 { email: form.email }
             );
 
@@ -95,7 +96,7 @@ function Register () {
             console.log("Sending registration request");
             
             await axios.post(
-                "http://localhost:5000/auth/register",
+                `${API_URL}/auth/register`,
                 form
             );
             setSuccess("Registration request sent. Please wait for admin approval.");
