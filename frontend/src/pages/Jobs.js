@@ -38,7 +38,7 @@ function Jobs () {
             }
         );
         setJobs(res.data);
-    }, [token]);
+    }, [token, API_URL]);
 
     useEffect(() => { fetchJobs(); }, [fetchJobs]);
 

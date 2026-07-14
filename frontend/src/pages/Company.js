@@ -49,7 +49,7 @@ function Company() {
         } catch (err) {
             setError(err.response?.data || "Failed to load company details");
         }
-    }, [token]);
+    }, [token, API_URL]);
 
     useEffect(() => {
         fetchCompanyDetails();

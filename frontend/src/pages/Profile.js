@@ -39,7 +39,7 @@ function Profile() {
         } catch {
             setError("Failed to load users");
         }
-    }, [token]);
+    }, [token, API_URL]);
 
     useEffect(() => {
         if (role === "Admin") {
@@ -84,7 +84,7 @@ function Profile() {
             const userId = localStorage.getItem("userId");
 
             const res = await axios.put(
-                `${API_URL}auth/update-profile/${userId}`,
+                `${API_URL}/auth/update-profile/${userId}`,
                 profile,
                 { headers: { Authorization: token } }
             );

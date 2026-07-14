@@ -92,7 +92,7 @@ function Candidates () {
                 setSelectedStatus("");
             });
         }
-    }, [selected, token]);
+    }, [selected, token, API_URL]);
 
     useEffect(() => {
         if (form.status === "Interview Scheduled" && companyDetails?.companyAddress) {
@@ -118,7 +118,7 @@ function Candidates () {
         } catch (err) {
             console.log(err);
         }
-    }, [token]);
+    }, [token, API_URL]);
 
     useEffect(() => {
         getCompanyDetails();
@@ -133,7 +133,7 @@ function Candidates () {
         } catch (err) {
             console.log(err);
         }
-    }, [token]);
+    }, [token, API_URL]);
 
     useEffect(() => { 
         setCurrentPage(1); 
@@ -148,7 +148,7 @@ function Candidates () {
         }
         );
         setCandidates(res.data);
-    }, [token]);
+    }, [token, API_URL]);
 
     const saveCandidate = async (e) => {
         setError("");
@@ -326,7 +326,7 @@ function Candidates () {
         } catch (err) {
             console.log(err);
         }
-    }, [token]);
+    }, [token, API_URL]);
 
     useEffect(() => {
         fetchCandidates();

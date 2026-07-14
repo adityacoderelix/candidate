@@ -46,7 +46,7 @@ function ApplyForm() {
                 console.log(err);
                 setJobs([]);
             });
-    }, []);
+    }, [API_URL]);
 
     const submitApplication = async (e) => {
         e.preventDefault();
