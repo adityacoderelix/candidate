@@ -36,7 +36,7 @@ function Dashboard () {
         } catch (err) {
             console.log(err);
         }
-    }, [token]);
+    }, [token, API_URL]);
     
     useEffect(() => { fetchData(); }, [fetchData]);
 
