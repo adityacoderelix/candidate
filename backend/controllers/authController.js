@@ -83,7 +83,7 @@ export const register = async (req,res) => {
 
     } catch (err) {
         console.log(err);
-        res.status(500).json("Server error");
+        res.status(500).json(err.message);
     }
 };
 
@@ -132,7 +132,7 @@ export const login = async (req,res) => {
         });
     } catch (err) {
         console.log(err);
-        res.status(500).json("Server error");
+        res.status(500).json(err.message);
     }
 }
 
@@ -145,7 +145,7 @@ export const getUsers = async (req,res) => {
         res.json(users);
     } catch (err) {
         console.log(err);
-        res.status(500).json("Server Error");
+        res.status(500).json(err.message);
     }
 }
 
@@ -167,35 +167,38 @@ export const resetPassword = async (req,res) => {
         res.json("Password Reset Successful");
     } catch (err) {
         console.log(err);
-        res.status(500).json("Server Error");
+        res.status(500).json(err.message);
     }
 }
 
 export const checkEmail = async (req, res) => {
-  try {
-    const { email } = req.body;
+    try {
+        console.log("BODY:", req.body);
 
-    const existingUser = await User.findOne({
-      email: email.toLowerCase(),
-    });
+        const { email } = req.body;
 
-    if (existingUser) {
-      return res.status(200).json({
-        exists: true,
-      });
+        if (!email) {
+            return res.status(400).json({
+                error: "Email missing"
+            });
+        }
+
+        const existingUser = await User.findOne({
+            email: email.toLowerCase()
+        });
+
+        return res.json({
+            exists: !!existingUser
+        });
+
+    } catch (err) {
+        console.error(err);
+
+        return res.status(500).json({
+            error: err.message,
+            stack: err.stack
+        });
     }
-
-    return res.status(200).json({
-      exists: false,
-    });
-
-  } catch (err) {
-    console.log(err);
-
-    return res.status(500).json({
-      error: "Server error",
-    });
-  }
 };
 
 export const deleteUser = async (req,res) => {
