@@ -88,8 +88,6 @@ export const register = async (req,res) => {
 };
 
 export const login = async (req,res) => {
-    console.log("LOGIN HIT");
-    console.log(req.body);
     const emailVal = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
     if(!emailVal.test(req.body.email)) { 
