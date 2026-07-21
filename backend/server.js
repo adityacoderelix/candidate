@@ -16,11 +16,7 @@ import logger from "./middleware/logMiddleware.js";
 const app = express();
 
 app.use(cors({
-    origin: [
-        "http://localhost:3000",
-        "https://cms-frontend.vercel.app",
-        "https://cms-frontend-f57d4uwec-sairahdmello16-4553s-projects.vercel.app"
-    ],
+    origin: [process.env.FRONTEND_URL, "http://localhost:3000"],
     credentials: true
 }));
 
