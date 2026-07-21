@@ -25,6 +25,8 @@ app.use(express.urlencoded({ extended: true }));
 
 app.use("/uploads", express.static("uploads"));
 
+console.log("Mongo URI exists:", !!process.env.MONGO_URI);
+console.log("Mongo URI starts with:", process.env.MONGO_URI?.substring(0, 20));
 mongoose.connect(process.env.MONGO_URI)
 .then(() => {console.log('MONGODB CONNECTED')})
 .catch((err) => {
