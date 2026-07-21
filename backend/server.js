@@ -15,10 +15,40 @@ import logger from "./middleware/logMiddleware.js";
 
 const app = express();
 
+const allowedOrigins = [
+    process.env.FRONTEND_URL,
+    "http://localhost:3000"
+];
+
 app.use(cors({
-    origin: [process.env.FRONTEND_URL, "http://localhost:3000"],
+    origin: function (origin, callback) {
+
+        if (!origin) {
+            return callback(null, true);
+        }
+
+        if (allowedOrigins.includes(origin)) {
+            return callback(null, true);
+        }
+
+        return callback(new Error("Not allowed by CORS"));
+    },
+    methods: [
+        "GET",
+        "POST",
+        "PUT",
+        "DELETE",
+        "PATCH",
+        "OPTIONS"
+    ],
+    allowedHeaders: [
+        "Content-Type",
+        "Authorization"
+    ],
     credentials: true
 }));
+
+app.options("*", cors());
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
@@ -32,17 +62,23 @@ app.use("/uploads", express.static("uploads"));
 
 console.log("FRONTEND_URL =", process.env.FRONTEND_URL);
 console.log("Mongo URI exists:", !!process.env.MONGO_URI);
-console.log("Mongo URI starts with:", process.env.MONGO_URI?.substring(0, 20));
+console.log(
+    "Mongo URI starts with:",
+    process.env.MONGO_URI?.substring(0, 20)
+);
+
 mongoose.connect(process.env.MONGO_URI)
-.then(() => {console.log('MONGODB CONNECTED')})
+.then(() => {
+    console.log("MONGODB CONNECTED");
+})
 .catch((err) => {
-  console.log('MONGODB CONNECTION FAILED');
-  console.error(err);
+    console.log("MONGODB CONNECTION FAILED");
+    console.error(err);
 });
 
-app.get('/', (req,res) => {
-  res.send("Root route");
-})
+app.get("/", (req,res) => {
+    res.send("Root route");
+});
 
 app.use(logger);
 
@@ -53,13 +89,14 @@ app.use("/notes", noteRoutes);
 app.use("/auth", resetPasswordRoutes);
 app.use("/company-details", companyRoutes);
 
-app.listen(5000, () => {
-  console.log("Server running on port 5000");
-});
-
 app.use((err, req, res, next) => {
     console.error("GLOBAL ERROR:", err);
+
     res.status(500).json({
         error: err.message
     });
+});
+
+app.listen(5000, () => {
+    console.log("Server running on port 5000");
 });
