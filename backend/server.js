@@ -15,10 +15,7 @@ import logger from "./middleware/logMiddleware.js";
 
 const app = express();
 
-const allowedOrigins = [
-    process.env.FRONTEND_URL,
-    "http://localhost:3000"
-];
+const allowedOrigins = [process.env.FRONTEND_URL, "http://localhost:3000"];
 
 app.use(cors({
     origin: function (origin, callback) {
@@ -33,18 +30,8 @@ app.use(cors({
 
         return callback(new Error("Not allowed by CORS"));
     },
-    methods: [
-        "GET",
-        "POST",
-        "PUT",
-        "DELETE",
-        "PATCH",
-        "OPTIONS"
-    ],
-    allowedHeaders: [
-        "Content-Type",
-        "Authorization"
-    ],
+    methods: ["GET","POST","PUT","DELETE","PATCH","OPTIONS"],
+    allowedHeaders: ["Content-Type", "Authorization"],
     credentials: true
 }));
 
@@ -57,15 +44,6 @@ app.use((req, res, next) => {
 });
 
 app.use("/uploads", express.static("uploads"));
-
-mongoose.connect(process.env.MONGO_URI)
-.then(() => {
-    console.log("MONGODB CONNECTED");
-})
-.catch((err) => {
-    console.log("MONGODB CONNECTION FAILED");
-    console.error(err);
-});
 
 app.get("/", (req,res) => {
     res.send("Root route");
@@ -88,6 +66,20 @@ app.use((err, req, res, next) => {
     });
 });
 
-app.listen(5000, () => {
-    console.log("Server running on port 5000");
-});
+const startServer = async () => {
+    try {
+        await mongoose.connect(process.env.MONGO_URI);
+        console.log("MONGODB CONNECTED");
+
+        app.listen(5000, () => {
+            console.log("Server running on port 5000");
+        });
+
+    } catch (err) {
+        console.log("MONGODB CONNECTION FAILED");
+        console.error(err);
+        process.exit(1);
+    }
+};
+
+startServer();
