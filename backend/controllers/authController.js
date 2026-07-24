@@ -118,7 +118,7 @@ export const login = async (req,res) => {
             role: user.role,
             name: user.name,
             email: user.email
-        }, "secretkey",
+        }, process.env.JWT_SECRET,
         {
             expiresIn: "1d"
         });
