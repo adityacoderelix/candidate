@@ -66,20 +66,23 @@ app.use((err, req, res, next) => {
     });
 });
 
-const startServer = async () => {
+let isConnected = false;
+
+async function connectDB() {
+    if (isConnected) return;
+
     try {
         await mongoose.connect(process.env.MONGO_URI);
+
+        isConnected = true;
         console.log("MONGODB CONNECTED");
-
-        app.listen(5000, () => {
-            console.log("Server running on port 5000");
-        });
-
     } catch (err) {
-        console.log("MONGODB CONNECTION FAILED");
-        console.error(err);
-        process.exit(1);
+        console.error("MONGODB CONNECTION FAILED");
+        throw err;
     }
-};
+}
 
-startServer();
+export default async function handler(req, res) {
+    await connectDB();
+    return app(req, res);
+}
