@@ -15,11 +15,7 @@ import logger from "./middleware/logMiddleware.js";
 
 const app = express();
 
-const allowedOrigins = [
-  process.env.FRONTEND_URL,
-  "http://localhost:3000",
-  "https://cms.coderelix.com",
-];
+const allowedOrigins = [process.env.FRONTEND_URL, "http://localhost:3000"];
 
 app.use(
   cors({
@@ -86,20 +82,8 @@ async function connectDB() {
     throw err;
   }
 }
-const PORT = process.env.PORT || 5000;
-async function startServer() {
-  try {
-    await connectDB();
-    app.listen(PORT, "0.0.0.0", () => {
-      console.log(`Server running on port ${PORT}`);
-    });
-  } catch (err) {
-    console.error("Failed to start server:", err);
-    process.exit(1);
-  }
+
+export default async function handler(req, res) {
+  await connectDB();
+  return app(req, res);
 }
-startServer();
-// export default async function handler(req, res) {
-//     await connectDB();
-//     return app(req, res);
-// }
